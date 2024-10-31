@@ -2,7 +2,6 @@ package xyz.niflheim.stockfish.ui;
 
 import org.apache.log4j.Logger;
 import xyz.niflheim.stockfish.repository.User;
-import xyz.niflheim.stockfish.repository.UserRepository;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -170,17 +169,8 @@ public class LoginPanel extends JPanel {
         loginPanelButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                User user = userRepository.findById(usernameField.getText());
-
-                if(user.getPassword().equals(passwordField.getText())) { // 로그인성공
-                    launchFrame.setVisible(false);
-                    new Frame();
 
 
-
-                }else {
-
-                }
 
             }
         });

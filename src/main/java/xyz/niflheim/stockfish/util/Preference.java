@@ -8,6 +8,16 @@ public class Preference {
     private Elo elo;
     private String userName;
 
+    public Preference(GameMode gameMode,String userName) {
+        this.gameMode = gameMode;
+        this.userName = userName;
+    }
+
+    public Preference(GameMode gameMode, Elo elo, String userName) {
+        this.gameMode = gameMode;
+        this.elo = elo;
+        this.userName = userName;
+    }
 
     public Elo getElo() {
         return elo;

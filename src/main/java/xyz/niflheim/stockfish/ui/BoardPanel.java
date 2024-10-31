@@ -1,8 +1,11 @@
 package xyz.niflheim.stockfish.ui;
 
 import com.github.bhlangonijr.chesslib.*;
+import com.github.bhlangonijr.chesslib.game.GameMode;
 import com.github.bhlangonijr.chesslib.move.Move;
+import xyz.niflheim.stockfish.exceptions.StockfishInitException;
 import xyz.niflheim.stockfish.util.GameDTO;
+import xyz.niflheim.stockfish.util.Preference;
 
 import javax.swing.*;
 import java.awt.*;
@@ -254,15 +257,17 @@ public class BoardPanel extends JPanel implements BoardEventListener {
             loadingBoard(board);
         }
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws StockfishInitException {
         // Swing UI를 만들기 위한 메인 프레임 생성
         JFrame frame = new JFrame("Chess Game");
+        Preference preference = new Preference(GameMode.HUMAN_VS_HUMAN,"kyonggi");
+        GameDTO gameDTO = new GameDTO(preference);
 
         // 종료 버튼 설정
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // 체스 보드 패널 생성 (정방향 설정)
-        BoardPanel boardPanel = new BoardPanel(false); // false는 보드가 정방향임을 의미합니다.
+        BoardPanel boardPanel = new BoardPanel(gameDTO); // false는 보드가 정방향임을 의미합니다.
 
         // 패널을 프레임에 추가
         frame.add(boardPanel);
