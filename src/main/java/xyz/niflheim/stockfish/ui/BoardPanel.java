@@ -267,7 +267,7 @@ public class BoardPanel extends JPanel implements BoardEventListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // 체스 보드 패널 생성 (정방향 설정)
-        BoardPanel boardPanel = new BoardPanel(gameDTO); // false는 보드가 정방향임을 의미합니다.
+        BoardPanel boardPanel = new BoardPanel(gameDTO);
 
         // 패널을 프레임에 추가
         frame.add(boardPanel);
