@@ -35,7 +35,7 @@ public class SquarePanel extends JPanel {
             int diameter = Math.min(getWidth(), getHeight()) / 3;
             int x = (getWidth() - diameter) / 2;
             int y = (getHeight() - diameter) / 2;
-            g2d.fillOval(x, y, diameter, diameter); // 원 그리기
+            g2d.fillRect(x, y, diameter, diameter); // 원 그리기
         }
     }
 }

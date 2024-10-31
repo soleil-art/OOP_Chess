@@ -27,7 +27,7 @@ public class BoardPanel extends JPanel implements BoardEventListener {
 
     public BoardPanel(boolean boardReversed) {
         super(new BorderLayout());
-        board = new Board();;
+        board = new Board();
         board.addEventListener(BoardEventType.ON_MOVE,this);
         board.addEventListener(BoardEventType.ON_LOAD,this);
         board.addEventListener(BoardEventType.ON_UNDO_MOVE,this);
