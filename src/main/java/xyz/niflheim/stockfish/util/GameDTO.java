@@ -10,7 +10,7 @@ import xyz.niflheim.stockfish.exceptions.StockfishInitException;
 public class GameDTO {
     private Board board;
     private StockfishClient stockfishClient;
-    private GameMode gameMode;
+    private final GameMode gameMode;
     private boolean boardReserved;
     private String blackPlayer;
     private String whitePlayer;
@@ -29,6 +29,31 @@ public class GameDTO {
                     .setOption(Option.Skill_Level,elo.getRating()).build();
         }
     }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public StockfishClient getStockfishClient() {
+        return stockfishClient;
+    }
+
+    public GameMode getGameMode() {
+        return gameMode;
+    }
+
+    public boolean isBoardReserved() {
+        return boardReserved;
+    }
+
+    public String getBlackPlayer() {
+        return blackPlayer;
+    }
+
+    public String getWhitePlayer() {
+        return whitePlayer;
+    }
+
     private void initializeBoard(Preference preference) {
         board = new Board();
         if(gameMode==GameMode.HUMAN_VS_MACHINE) {
@@ -42,5 +67,6 @@ public class GameDTO {
             blackPlayer = preference.getUserName()+"(1)";
             whitePlayer = preference.getUserName();
         }
+
     }
 }

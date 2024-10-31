@@ -2,6 +2,7 @@ package xyz.niflheim.stockfish.ui;
 
 import com.github.bhlangonijr.chesslib.*;
 import com.github.bhlangonijr.chesslib.move.Move;
+import xyz.niflheim.stockfish.util.GameDTO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,14 +26,14 @@ public class BoardPanel extends JPanel implements BoardEventListener {
     int index =0;
 
 
-    public BoardPanel(boolean boardReversed) {
+    public BoardPanel(GameDTO gameDTO) {
         super(new BorderLayout());
-        board = new Board();
+        board = gameDTO.getBoard();
         board.addEventListener(BoardEventType.ON_MOVE,this);
         board.addEventListener(BoardEventType.ON_LOAD,this);
         board.addEventListener(BoardEventType.ON_UNDO_MOVE,this);
 
-        this.boardReversed = boardReversed;
+        this.boardReversed = gameDTO.isBoardReserved();
         values = Square.values();
 
         initializeBoardLayeredPanel();
