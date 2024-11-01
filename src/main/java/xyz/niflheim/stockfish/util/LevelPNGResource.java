@@ -3,9 +3,9 @@ package xyz.niflheim.stockfish.util;
 import javax.swing.*;
 import java.awt.*;
 
-public class LevelPNGResouce {
+public class LevelPNGResource extends JPanel{
 
-    public static final LevelPNGResouce levelPNG = new LevelPNGResouce();
+    public static final LevelPNGResource levelPNG = new LevelPNGResource();
     public static String[] levels = {"체스 초심자", "초심자", "중급", "고급"};
     public static String[] imageFiles = {
             "/image/level/chess_beginner.png",
@@ -16,7 +16,7 @@ public class LevelPNGResouce {
     public static ImageIcon[] imageIcons;
     public static ImageIcon background;
 
-    public LevelPNGResouce() {
+    public LevelPNGResource() {
         imageIcons = new ImageIcon[4];
         for (int i = 0; i < imageFiles.length; i++) {
             // getClass().getResource()가 null을 반환할 가능성이 있으므로 검사 필요
@@ -41,5 +41,12 @@ public class LevelPNGResouce {
             System.err.println("Error loading background image.");
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Chess Game");
+        LevelPNGResource levelPNGResource = new LevelPNGResource();
+        frame.add(frame);
+        frame.setVisible(true);
     }
 }

@@ -12,13 +12,10 @@ public class Preference {
         this.userName = userName;
     }
 
-
     public Preference(GameMode gameMode, String userName) {
         this.gameMode = gameMode;
         this.userName = userName;
     }
-
-
 
     public Elo getElo() {
         return elo;

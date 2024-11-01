@@ -22,7 +22,7 @@ public class GameDTO {
     }
 
     private void createStockFishClient(Preference preference) throws StockfishInitException {
-        if(gameMode==GameMode.HUMAN_VS_MACHINE || gameMode==GameMode.MACHINE_VS_HUMAN) {
+        if(gameMode==GameMode.HUMAN_VS_MACHINE || gameMode==GameMode.MACHINE_VS_HUMAN) { // 엔진이랑 플레이 할 경우
             Elo elo = preference.getElo();
             stockfishClient = new StockfishClient.Builder().setVariant(Variant.BMI2).setInstances(1) // 초심자,중수,고수 분류에 따른 엔진 생성
                     .setOption(Option.Skill_Level,elo.getRating()).build();

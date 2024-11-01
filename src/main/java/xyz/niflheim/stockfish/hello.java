@@ -3,6 +3,7 @@ package xyz.niflheim.stockfish;
 import com.github.bhlangonijr.chesslib.Board;
 import com.github.bhlangonijr.chesslib.Square;
 import com.github.bhlangonijr.chesslib.move.Move;
+import com.github.bhlangonijr.chesslib.move.MoveList;
 import xyz.niflheim.stockfish.engine.StockfishClient;
 import xyz.niflheim.stockfish.engine.enums.Option;
 import xyz.niflheim.stockfish.engine.enums.Query;
@@ -38,7 +39,7 @@ public class hello {
             }else {
                 System.out.println("실패");
             }
-
         });
     }
+
 }

@@ -182,7 +182,6 @@ public class LoginPanel extends JPanel {
         backgroundLabel.add(loginPanelButton);
     }
 
-
     public static void main(String[] args) {
         // 프레임 생성
         JFrame frame = new JFrame("Login");

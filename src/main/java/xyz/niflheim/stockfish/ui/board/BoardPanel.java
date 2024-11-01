@@ -215,7 +215,6 @@ public class BoardPanel extends JPanel implements BoardEventListener {
 
                 SquarePanel squarePanel = (SquarePanel)getSquarePanel(file, rank);
                 if(boardPiece!=Piece.NONE) {
-
                     addComponentToPanel(squarePanel,getPieceImageLabel(boardPiece.toString()));
                 }else {
                     squarePanel.removeAll();
@@ -224,9 +223,7 @@ public class BoardPanel extends JPanel implements BoardEventListener {
 
                 }
             }
-
         }
-
     }
 
     private JLabel getPieceImageLabel(String piece) {

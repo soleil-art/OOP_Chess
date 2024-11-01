@@ -49,8 +49,6 @@ public class PreferenceFrame extends JFrame { //PreferenceFrame -> GameFrame
                 dispose(); // 기존의 창 닫기
             }
         });
-        
-
 
         layeredPane.add(button);
     }
@@ -72,6 +70,4 @@ public class PreferenceFrame extends JFrame { //PreferenceFrame -> GameFrame
         }
 
     }
-
-
 }
