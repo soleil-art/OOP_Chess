@@ -31,12 +31,10 @@ public class MoveHistoryLogicTest {
 
         for(Move move : moveList) {
             boolean isMoveValid = board.doMove(move, true);
-            if(isMoveValid) {
-                moveHistory.add(move);
-                System.out.println("------------------------------------");
-            }else {
+            if(!isMoveValid) {
                 throw new RuntimeException("기물 이동 오류");
             }
+            System.out.println("------------------------------------");
         }
         String[] fanArray = moveHistory.toFanArray();
         System.out.println("기물 히스토리 출력부 =>");

@@ -3,6 +3,7 @@ package xyz.niflheim.stockfish.ui.board;
 import com.github.bhlangonijr.chesslib.*;
 import com.github.bhlangonijr.chesslib.game.GameMode;
 import com.github.bhlangonijr.chesslib.move.Move;
+import com.github.bhlangonijr.chesslib.move.MoveList;
 import xyz.niflheim.stockfish.exceptions.StockfishInitException;
 import xyz.niflheim.stockfish.ui.PieceDragAndDropListener;
 import xyz.niflheim.stockfish.ui.SquarePanel;
@@ -18,6 +19,7 @@ public class BoardPanel extends JPanel implements BoardEventListener {
     public static final int SQUARE_DIMENSION = 75;
 
     private final Board board;
+    private final MoveList moveHistory;
     private boolean boardReversed;
 
     private JPanel boardPanel;
@@ -34,6 +36,8 @@ public class BoardPanel extends JPanel implements BoardEventListener {
     public BoardPanel(GameDTO gameDTO) {
         super(new BorderLayout());
         board = gameDTO.getBoard();
+        moveHistory = gameDTO.getMoveHistory();
+        //board 리스너 추가
         board.addEventListener(BoardEventType.ON_MOVE,this);
         board.addEventListener(BoardEventType.ON_LOAD,this);
         board.addEventListener(BoardEventType.ON_UNDO_MOVE,this);
@@ -153,51 +157,13 @@ public class BoardPanel extends JPanel implements BoardEventListener {
         }
     }
     public void executeMove(Move move) {
+        moveHistory.add(move);
         loadingBoard(this.board);
         System.out.println(board.toString());
         System.out.println(board.getFen());
     }
     public void executeUndo(MoveBackup undoMove) {
-        Square from = undoMove.getMove().getFrom();
-        Square moveTo = undoMove.getMove().getTo();
-
-        JPanel originalSquarePanel = getSquarePanel(from.getFile().getNotation().charAt(0), Integer.parseInt(from.getRank().getNotation()));
-        JPanel destinationSquarePanel = getSquarePanel(moveTo.getFile().getNotation().charAt(0), Integer.parseInt(moveTo.getRank().getNotation()));
-
-        if(undoMove.getCapturedPiece()!=Piece.NONE) { // 기물을 잡았던 경우
-            Piece capturedPiece = undoMove.getCapturedPiece();
-
-            if(undoMove.getMove().getPromotion()!=Piece.NONE) { // 기물을 잡으면서 동시에 프로모션을 한 경우
-                Piece movingPiece = undoMove.getMovingPiece();
-                addComponentToPanel(originalSquarePanel,getPieceImageLabel(movingPiece.toString()));
-                addComponentToPanel(destinationSquarePanel,getPieceImageLabel(capturedPiece.toString()));
-            }else {
-                addComponentToPanel(originalSquarePanel,destinationSquarePanel.getComponent(0));
-                addComponentToPanel(destinationSquarePanel,getPieceImageLabel(capturedPiece.toString()));
-            }
-        }else { // 기물을 잡지 않은 경우
-            if(undoMove.isCastleMove()) { // 캐스링한 경우
-                Component orginComponent = originalSquarePanel.getComponent(0);
-                Component destinationComponent = destinationSquarePanel.getComponent(0);
-
-                addComponentToPanel(originalSquarePanel,destinationComponent);
-                addComponentToPanel(destinationSquarePanel,orginComponent);
-
-            }else if(undoMove.getMove().getPromotion()!=Piece.NONE){
-                addComponentToPanel(originalSquarePanel,getPieceImageLabel(undoMove.getMovingPiece().toString()));
-
-                destinationSquarePanel.removeAll();
-                destinationSquarePanel.revalidate();
-                destinationSquarePanel.repaint();
-            }else {
-                addComponentToPanel(originalSquarePanel,destinationSquarePanel.getComponent(0));
-
-                destinationSquarePanel.removeAll();
-                destinationSquarePanel.revalidate();
-                destinationSquarePanel.repaint();
-            }
-        }
-
+        // 무르기 기능 구현 x
     }
     private void addComponentToPanel(JPanel panel,Component component) {
         panel.removeAll();
@@ -220,7 +186,6 @@ public class BoardPanel extends JPanel implements BoardEventListener {
                     squarePanel.removeAll();
                     squarePanel.revalidate();
                     squarePanel.repaint();
-
                 }
             }
         }

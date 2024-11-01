@@ -12,6 +12,7 @@ public class GameDTO {
     private Board board;//chessLib 라이브러리
     private MoveList moveHistory;
     private StockfishClient stockfishClient; //스탁피쉬 엔진
+
     private final GameMode gameMode;
     private boolean boardReserved;
     private String blackPlayer;
@@ -33,6 +34,7 @@ public class GameDTO {
     private void initializeBoardSetting(Preference preference) {
         board = new Board();
         moveHistory = new MoveList(board.getFen());
+
         if(gameMode==GameMode.HUMAN_VS_MACHINE) {
             blackPlayer = preference.getUserName(); // 사용자 아이디
             whitePlayer = "StockFishEngin";
