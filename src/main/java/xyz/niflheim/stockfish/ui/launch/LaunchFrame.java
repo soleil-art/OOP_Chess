@@ -1,4 +1,4 @@
-package xyz.niflheim.stockfish.ui;
+package xyz.niflheim.stockfish.ui.launch;
 
 import javax.swing.*;
 import java.awt.*;

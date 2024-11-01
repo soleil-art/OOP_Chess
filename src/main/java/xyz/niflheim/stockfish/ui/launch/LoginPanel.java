@@ -1,7 +1,8 @@
-package xyz.niflheim.stockfish.ui;
+package xyz.niflheim.stockfish.ui.launch;
 
 import org.apache.log4j.Logger;
 import xyz.niflheim.stockfish.repository.UserRepository;
+import xyz.niflheim.stockfish.ui.preference.PreferenceFrame;
 import xyz.niflheim.stockfish.util.Preference;
 
 import javax.swing.*;

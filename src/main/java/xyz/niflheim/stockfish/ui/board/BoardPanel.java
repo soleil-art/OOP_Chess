@@ -1,9 +1,11 @@
-package xyz.niflheim.stockfish.ui;
+package xyz.niflheim.stockfish.ui.board;
 
 import com.github.bhlangonijr.chesslib.*;
 import com.github.bhlangonijr.chesslib.game.GameMode;
 import com.github.bhlangonijr.chesslib.move.Move;
 import xyz.niflheim.stockfish.exceptions.StockfishInitException;
+import xyz.niflheim.stockfish.ui.PieceDragAndDropListener;
+import xyz.niflheim.stockfish.ui.SquarePanel;
 import xyz.niflheim.stockfish.util.GameDTO;
 import xyz.niflheim.stockfish.util.Preference;
 

@@ -9,7 +9,6 @@ import xyz.niflheim.stockfish.engine.enums.Query;
 import xyz.niflheim.stockfish.engine.enums.QueryType;
 import xyz.niflheim.stockfish.engine.enums.Variant;
 import xyz.niflheim.stockfish.exceptions.StockfishInitException;
-import xyz.niflheim.stockfish.ui.BoardPanel;
 import xyz.niflheim.stockfish.util.Elo;
 
 public class hello {

@@ -2,21 +2,16 @@ package xyz.niflheim.stockfish.ui;
 
 import com.github.bhlangonijr.chesslib.Board;
 import com.github.bhlangonijr.chesslib.Piece;
-import com.github.bhlangonijr.chesslib.Rank;
 import com.github.bhlangonijr.chesslib.Square;
-import com.github.bhlangonijr.chesslib.game.GameContext;
 import com.github.bhlangonijr.chesslib.move.Move;
 import com.github.bhlangonijr.chesslib.move.MoveGenerator;
+import xyz.niflheim.stockfish.ui.board.BoardPanel;
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class PieceDragAndDropListener implements MouseListener, MouseMotionListener {

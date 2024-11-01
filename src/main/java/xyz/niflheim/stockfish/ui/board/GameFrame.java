@@ -1,4 +1,4 @@
-package xyz.niflheim.stockfish.ui;
+package xyz.niflheim.stockfish.ui.board;
 
 import xyz.niflheim.stockfish.util.GameDTO;
 
