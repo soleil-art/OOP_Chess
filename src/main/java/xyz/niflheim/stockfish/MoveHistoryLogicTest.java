@@ -1,6 +1,7 @@
 package xyz.niflheim.stockfish;
 
 import com.github.bhlangonijr.chesslib.Board;
+import com.github.bhlangonijr.chesslib.Piece;
 import com.github.bhlangonijr.chesslib.Square;
 import com.github.bhlangonijr.chesslib.game.GameMode;
 import com.github.bhlangonijr.chesslib.move.Move;
@@ -25,19 +26,22 @@ public class MoveHistoryLogicTest {
         Board board = boardPanel.getBoard();
         MoveList moveHistory = gameDTO.getMoveHistory();
 
-        List<Move> moveList = new ArrayList<>(List.of(new Move(Square.D2,Square.D4),new Move(Square.G8,Square.F6),new Move(Square.E2,Square.E4)));
+        List<Move> moveList = new ArrayList<>(List.of(new Move(Square.D2,Square.D4),new Move(Square.G8,Square.F6),new Move(Square.C2,Square.C4),
+        new Move(Square.E7,Square.E6),new Move(Square.G1,Square.G3)));
 
         for(Move move : moveList) {
             boolean isMoveValid = board.doMove(move, true);
             if(isMoveValid) {
                 moveHistory.add(move);
+                System.out.println("------------------------------------");
             }else {
                 throw new RuntimeException("기물 이동 오류");
             }
         }
-        String[] sanArray = moveHistory.toSanArray();
-        for(String san : sanArray) {
-            System.out.printf("%s ",san);
+        String[] fanArray = moveHistory.toFanArray();
+        System.out.println("기물 히스토리 출력부 =>");
+        for(String fan : fanArray) {
+            System.out.printf("%s ",fan);
         }
     }
 }
