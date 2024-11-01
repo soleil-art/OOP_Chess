@@ -10,30 +10,34 @@ import xyz.niflheim.stockfish.ui.board.BoardPanel;
 import xyz.niflheim.stockfish.util.GameDTO;
 import xyz.niflheim.stockfish.util.Preference;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MoveHistoryLogicTest {
+
     public static void main(String[] args) throws StockfishInitException {
         Preference preference = new Preference("UserName");
         preference.setGameMode(GameMode.HUMAN_VS_HUMAN);
-
         GameDTO gameDTO = new GameDTO(preference);
+
         BoardPanel boardPanel = new BoardPanel(gameDTO);
 
         Board board = boardPanel.getBoard();
-        MoveList moveHistory = new MoveList(board.getFen());
+        MoveList moveHistory = gameDTO.getMoveHistory();
 
-        Move move = new Move(Square.E2, Square.E4);
-        boolean isMoveValid = board.doMove(move, true);
-        if(isMoveValid) {
-            moveHistory.add(move);
-            String fen = moveHistory.getFen();
-            System.out.println();
-            System.out.println("moveList Fen : " + fen);
-            System.out.println("Board Fen : " + board.getFen());
-        }else {
-            System.out.println("올바르지 않은 이동입니다.");
+        List<Move> moveList = new ArrayList<>(List.of(new Move(Square.D2,Square.D4),new Move(Square.G8,Square.F6),new Move(Square.E2,Square.E4)));
+
+        for(Move move : moveList) {
+            boolean isMoveValid = board.doMove(move, true);
+            if(isMoveValid) {
+                moveHistory.add(move);
+            }else {
+                throw new RuntimeException("기물 이동 오류");
+            }
         }
-
-
-
+        String[] sanArray = moveHistory.toSanArray();
+        for(String san : sanArray) {
+            System.out.printf("%s ",san);
+        }
     }
 }

@@ -2,13 +2,15 @@ package xyz.niflheim.stockfish.util;
 
 import com.github.bhlangonijr.chesslib.Board;
 import com.github.bhlangonijr.chesslib.game.GameMode;
+import com.github.bhlangonijr.chesslib.move.MoveList;
 import xyz.niflheim.stockfish.engine.StockfishClient;
 import xyz.niflheim.stockfish.engine.enums.Option;
 import xyz.niflheim.stockfish.engine.enums.Variant;
 import xyz.niflheim.stockfish.exceptions.StockfishInitException;
 
 public class GameDTO {
-    private Board board; //chessLib 라이브러리
+    private Board board;//chessLib 라이브러리
+    private MoveList moveHistory;
     private StockfishClient stockfishClient; //스탁피쉬 엔진
     private final GameMode gameMode;
     private boolean boardReserved;
@@ -30,6 +32,7 @@ public class GameDTO {
     }
     private void initializeBoardSetting(Preference preference) {
         board = new Board();
+        moveHistory = new MoveList(board.getFen());
         if(gameMode==GameMode.HUMAN_VS_MACHINE) {
             blackPlayer = preference.getUserName(); // 사용자 아이디
             whitePlayer = "StockFishEngin";
@@ -68,4 +71,7 @@ public class GameDTO {
         return whitePlayer;
     }
 
+    public MoveList getMoveHistory() {
+        return moveHistory;
+    }
 }
