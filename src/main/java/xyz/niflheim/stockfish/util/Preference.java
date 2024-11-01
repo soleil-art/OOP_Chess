@@ -8,16 +8,17 @@ public class Preference {
     private Elo elo;
     private String userName;
 
-    public Preference(GameMode gameMode,String userName) {
+    public Preference(String userName) {
+        this.userName = userName;
+    }
+
+
+    public Preference(GameMode gameMode, String userName) {
         this.gameMode = gameMode;
         this.userName = userName;
     }
 
-    public Preference(GameMode gameMode, Elo elo, String userName) {
-        this.gameMode = gameMode;
-        this.elo = elo;
-        this.userName = userName;
-    }
+
 
     public Elo getElo() {
         return elo;
@@ -29,5 +30,13 @@ public class Preference {
 
     public String getUserName() {
         return userName;
+    }
+
+    public void setElo(Elo elo) {
+        this.elo = elo;
+    }
+
+    public void setGameMode(GameMode gameMode) {
+        this.gameMode = gameMode;
     }
 }

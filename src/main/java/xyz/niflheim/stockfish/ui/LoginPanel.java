@@ -1,7 +1,8 @@
 package xyz.niflheim.stockfish.ui;
 
 import org.apache.log4j.Logger;
-import xyz.niflheim.stockfish.repository.User;
+import xyz.niflheim.stockfish.repository.UserRepository;
+import xyz.niflheim.stockfish.util.Preference;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -169,9 +170,12 @@ public class LoginPanel extends JPanel {
         loginPanelButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                //게임 선호 설정
+                Preference preference = new Preference(usernameField.getText());
+                PreferenceFrame preferenceFrame = new PreferenceFrame(preference);
+                preferenceFrame.setVisible(true);
 
-
-
+                SwingUtilities.getWindowAncestor(LoginPanel.this).dispose(); // 현재 프레임(로그인 프레임)을 가져와서 닫기
             }
         });
         backgroundLabel.add(loginPanelButton);

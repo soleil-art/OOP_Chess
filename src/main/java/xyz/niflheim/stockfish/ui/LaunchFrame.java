@@ -74,6 +74,7 @@ public class LaunchFrame extends JFrame {
         loginButton.setBounds(startX, 400, buttonWidth, buttonHeight); // 중앙 왼쪽 버튼 배치
         signUpButton.setBounds(startX + buttonWidth + gapBetweenButtons, 400, buttonWidth, buttonHeight); // 중앙 오른쪽 버튼 배치
 
+        // 버튼 리스너
         loginButton.addActionListener(e -> showLoginPanel());
 
         // 버튼 추가
