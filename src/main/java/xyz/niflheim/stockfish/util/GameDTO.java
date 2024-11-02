@@ -34,7 +34,6 @@ public class GameDTO {
     private void initializeBoardSetting(Preference preference) {
         board = new Board();
         moveHistory = new MoveList(board.getFen());
-
         if(gameMode==GameMode.HUMAN_VS_MACHINE) {
             blackPlayer = preference.getUserName(); // 사용자 아이디
             whitePlayer = "StockFishEngin";

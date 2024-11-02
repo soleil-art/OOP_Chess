@@ -13,6 +13,7 @@ import xyz.niflheim.stockfish.util.GameDTO;
 import xyz.niflheim.stockfish.util.Preference;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class GameFrame extends JFrame {
     private JLayeredPane layeredPane;
@@ -28,6 +29,7 @@ public class GameFrame extends JFrame {
         boardPanel = new BoardPanel(gameDTO);
         stockfishClient = gameDTO.getStockfishClient();
         board = boardPanel.getBoard();
+        setBackground(Color.decode("#302E2B"));
         initFrame();
     }
 
@@ -38,7 +40,7 @@ public class GameFrame extends JFrame {
         setLocationRelativeTo(null); // 화면 중앙에 위치
         setResizable(false);
 
-        boardPanel.setBounds(0, 0, 800, 600);  // 필요에 따라 크기를 조정
+        boardPanel.setBounds(0, 0, 8*BoardPanel.SQUARE_DIMENSION, 8*BoardPanel.SQUARE_DIMENSION);  // 필요에 따라 크기를 조정
         layeredPane = new JLayeredPane();
         layeredPane.add(boardPanel,JLayeredPane.DEFAULT_LAYER);
         setContentPane(layeredPane);

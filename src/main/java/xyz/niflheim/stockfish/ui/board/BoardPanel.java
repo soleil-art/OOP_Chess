@@ -332,7 +332,7 @@ public class BoardPanel extends JPanel implements BoardEventListener {
     public static void main(String[] args) throws StockfishInitException {
         // Swing UI를 만들기 위한 메인 프레임 생성
         JFrame frame = new JFrame("Chess Game");
-        Preference preference = new Preference(GameMode.HUMAN_VS_MACHINE,"kyonggi");
+        Preference preference = new Preference(GameMode.MACHINE_VS_HUMAN,"kyonggi");
         preference.setElo(Elo.BEGINNER);
         GameDTO gameDTO = new GameDTO(preference);
 
