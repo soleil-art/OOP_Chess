@@ -27,6 +27,7 @@ public class BoardPanel extends JPanel implements BoardEventListener {
     private boolean boardReversed;
     private boolean isUserTurn; // 사용자 턴인지 확인하는 변수
     private boolean isPVP;
+    private Square lastMove;
     private JPanel boardPanel;
     private JPanel[][] squarePanels;
     private JLayeredPane boardLayeredPane;
@@ -45,6 +46,7 @@ public class BoardPanel extends JPanel implements BoardEventListener {
         moveHistory = gameDTO.getMoveHistory();
         isUserTurn = gameDTO.getGameMode() == GameMode.MACHINE_VS_HUMAN;
         isPVP = gameDTO.getGameMode() == GameMode.MACHINE_VS_HUMAN || gameDTO.getGameMode() == GameMode.HUMAN_VS_MACHINE;
+        lastMove =Square.NONE;
         //board 리스너 추가
         board.addEventListener(BoardEventType.ON_MOVE,this);
         board.addEventListener(BoardEventType.ON_LOAD,this);
@@ -67,6 +69,9 @@ public class BoardPanel extends JPanel implements BoardEventListener {
 
     public void processUserMove(Move move) {
         Move userMove = move;
+        removeLastMoveHighLight(lastMove);
+        makeLastMoveHighlight(move.getTo());
+        lastMove = move.getTo();
         board.doMove(userMove, true);
         if(isPVP && isUserTurn) {
                 isUserTurn = false; // 사용자 턴 종료
@@ -77,6 +82,7 @@ public class BoardPanel extends JPanel implements BoardEventListener {
         String fen = board.getFen();
         Query query = new Query(QueryType.Best_Move, fen, 10, 10, 30000);
         stockfishClient.submit(query, this::processEngineMove);
+
     }
 
     private void processEngineMove(String bestMove) {
@@ -85,12 +91,16 @@ public class BoardPanel extends JPanel implements BoardEventListener {
         String from = bestMove.substring(0, 2).toUpperCase();
         String to = bestMove.substring(2, 4).toUpperCase();
         Move move = new Move(Square.valueOf(from), Square.valueOf(to));
-
+        makeLastMoveHighlight(move.getTo());
         try {
             Thread.sleep(1000);
             boolean isMoveValid = board.doMove(move, true);
+            Thread.sleep(500);
             if (isMoveValid) {
                 isUserTurn = true; // 엔진 턴 종료, 사용자 턴으로 전환
+                removeLastMoveHighLight(lastMove);
+                makeLastMoveHighlight(move.getTo());
+                lastMove = move.getTo();
             } else {
                 throw new RuntimeException("Invalid move from Stockfish.");
             }
@@ -222,22 +232,47 @@ public class BoardPanel extends JPanel implements BoardEventListener {
         panel.revalidate();
         panel.repaint();
     }
+    private void makeLastMoveHighlight(Square square) {
+        char file = getFileFromSquare(square);
+        int rank = getRankFromSquare(square);
+        SquarePanel squarePanel = (SquarePanel)getSquarePanel(file, rank);
+        squarePanel.lastMoveHighlight = true;
+        squarePanel.repaint();
+    }
+    private void removeLastMoveHighLight(Square square) {
+        if(square!=Square.NONE) {
+            char file = getFileFromSquare(square);
+            int rank = getRankFromSquare(square);
+            SquarePanel squarePanel = (SquarePanel) getSquarePanel(file,rank);
+            squarePanel.lastMoveHighlight = false;
+            squarePanel.repaint();
+        }
+
+    }
     public void loadingBoard(Board board) {
         for(Square square :Square.values()) {
             if(square!=Square.NONE) {
                 Piece boardPiece = board.getPiece(square);
-
-                char file = square.getFile().getNotation().charAt(0);
-                int rank = Integer.parseInt(square.getRank().getNotation());
-                SquarePanel squarePanel = (SquarePanel)getSquarePanel(file, rank);
-                if(boardPiece!=Piece.NONE) {
-                    addComponentToPanel(squarePanel,getPieceImageLabel(boardPiece.toString()));
-                }else {
-                    squarePanel.removeAll();
-                    squarePanel.repaint();
-                }
+                char file = getFileFromSquare(square);
+                int rank = getRankFromSquare(square);
+                updateSinglePanel(boardPiece,file,rank);
             }
         }
+    }
+    private void updateSinglePanel(Piece boardPiece,char file,int rank) {
+        SquarePanel squarePanel = (SquarePanel)getSquarePanel(file, rank);
+        if(boardPiece!=Piece.NONE) {
+            addComponentToPanel(squarePanel,getPieceImageLabel(boardPiece.toString()));
+        }else {
+            squarePanel.removeAll();
+            squarePanel.repaint();
+        }
+    }
+    private char getFileFromSquare(Square square) {
+        return square.getFile().getNotation().charAt(0);
+    }
+    private int getRankFromSquare(Square square) {
+        return  Integer.parseInt(square.getRank().getNotation());
     }
     // 임시 메서드 앙파상,케슬링 처리 + 코드최적화 필요
     public void loadingBoard(Board board,Square from,Square to) {
@@ -297,7 +332,7 @@ public class BoardPanel extends JPanel implements BoardEventListener {
     public static void main(String[] args) throws StockfishInitException {
         // Swing UI를 만들기 위한 메인 프레임 생성
         JFrame frame = new JFrame("Chess Game");
-        Preference preference = new Preference(GameMode.MACHINE_VS_HUMAN,"kyonggi");
+        Preference preference = new Preference(GameMode.HUMAN_VS_MACHINE,"kyonggi");
         preference.setElo(Elo.BEGINNER);
         GameDTO gameDTO = new GameDTO(preference);
 
