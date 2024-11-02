@@ -43,7 +43,7 @@ public class BoardPanel extends JPanel implements BoardEventListener {
         stockfishClient = gameDTO.getStockfishClient();
         board = gameDTO.getBoard();
         moveHistory = gameDTO.getMoveHistory();
-        isUserTurn = gameDTO.getGameMode() != GameMode.MACHINE_VS_HUMAN;
+        isUserTurn = gameDTO.getGameMode() == GameMode.MACHINE_VS_HUMAN;
         isPVP = gameDTO.getGameMode() == GameMode.MACHINE_VS_HUMAN || gameDTO.getGameMode() == GameMode.HUMAN_VS_MACHINE;
         //board 리스너 추가
         board.addEventListener(BoardEventType.ON_MOVE,this);
@@ -53,10 +53,18 @@ public class BoardPanel extends JPanel implements BoardEventListener {
         this.boardReversed = gameDTO.isBoardReserved();
         values = Square.values();
 
+        engineMove(isPVP,isUserTurn);
         initializeBoardLayeredPanel();
         initializeSquares();
         initializePieces();
     }
+
+    private void engineMove(boolean isPVP, boolean isUserTurn) {
+        if(isPVP && !isUserTurn) {
+            requestEngineMove();
+        }
+    }
+
     public void processUserMove(Move move) {
         Move userMove = move;
         board.doMove(userMove, true);
@@ -289,7 +297,7 @@ public class BoardPanel extends JPanel implements BoardEventListener {
     public static void main(String[] args) throws StockfishInitException {
         // Swing UI를 만들기 위한 메인 프레임 생성
         JFrame frame = new JFrame("Chess Game");
-        Preference preference = new Preference(GameMode.HUMAN_VS_MACHINE,"kyonggi");
+        Preference preference = new Preference(GameMode.MACHINE_VS_HUMAN,"kyonggi");
         preference.setElo(Elo.BEGINNER);
         GameDTO gameDTO = new GameDTO(preference);
 
