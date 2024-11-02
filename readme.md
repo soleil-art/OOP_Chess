@@ -1,3 +1,6 @@
+
+<img src="https://github.com/user-attachments/assets/442ab07a-dba6-47c1-8299-bff8bad4ad08" width="468" height="489"/>
+
 <개선사항>
 1.현재 boardPanel의 loadingBoard메서드는 domove함수가 실행될때마다 보드 전체를 업데이트함 => 약간의 버퍼링 발생</br>
 => 움직이는 칸들만 업데이트하는 로직 구현 필요. // from과 to의 위치를 업데이트하는 것뿐만아니라 앙파상이나 캐슬링이 발생한 경우도 고려해야함
