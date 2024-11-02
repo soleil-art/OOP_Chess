@@ -239,7 +239,7 @@ public class BoardPanel extends JPanel implements BoardEventListener {
             }
         }
     }
-    // 임시 메서드 앙파상,케슬링 처리도 필요함
+    // 임시 메서드 앙파상,케슬링 처리 + 코드최적화 필요
     public void loadingBoard(Board board,Square from,Square to) {
         char fromFile = from.getFile().getNotation().charAt(0);
         int fromRank = Integer.parseInt(from.getRank().getNotation());
