@@ -28,14 +28,14 @@ public class SquarePanel extends JPanel {
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             if (this.getBackground()==Color.decode("#7D945D")) {
-                g2d.setColor(Color.decode("#536B3A"));
+                g2d.setColor(Color.decode("#F08080"));
             }
             else
-                g2d.setColor(Color.decode("#A9AA96"));
-            int diameter = Math.min(getWidth(), getHeight()) / 3;
+                g2d.setColor(Color.decode("#F08080"));
+            int diameter = Math.min(getWidth(), getHeight())-10;
             int x = (getWidth() - diameter) / 2;
             int y = (getHeight() - diameter) / 2;
-            g2d.fillRect(x, y, diameter, diameter); // 원 그리기
+            g2d.fillRect(x, y, diameter, diameter); // 네모 그리기
         }
     }
 }

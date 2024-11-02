@@ -34,12 +34,6 @@ public class PieceDragAndDropListener implements MouseListener, MouseMotionListe
         originRank = calculateRank(e);
         Square clickedSquare;
 
-        if(boardPanel.isBoardReversed()) {
-
-
-        }else {
-
-        }
         Board board = boardPanel.getBoard();
         String notation = originFile + "" + originRank;
         clickedSquare = Square.valueOf(notation);
@@ -55,12 +49,15 @@ public class PieceDragAndDropListener implements MouseListener, MouseMotionListe
             if(isLegalMove || isPromotionBlack || isPromotionWhite) {
                 if(isPromotionBlack) {
                     Move move = new Move(fromPiece, clickedSquare, Piece.BLACK_QUEEN);
-                    board.doMove(move,true);
+                    //board.doMove(move,true);
+                    boardPanel.processUserMove(move);
                 }else if(isPromotionWhite) {
                     Move move = new Move(fromPiece, clickedSquare, Piece.WHITE_QUEEN);
-                    board.doMove(move,true);
+                    //board.doMove(move,true);
+                    boardPanel.processUserMove(move);
                 }else {
-                    board.doMove(new Move(fromPiece,clickedSquare),true);
+                    //board.doMove(new Move(fromPiece,clickedSquare),true);
+                    boardPanel.processUserMove(new Move(fromPiece,clickedSquare));
                 }
 
                 fromPiece = clickedSquare;
