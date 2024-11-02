@@ -1,3 +1,10 @@
+<문제점></br>
+1.엔진이 백일경우 엔진이 먼저 수를 둬야하는데 적용이 안되고 있음
+<개선사항>
+1.현재 boardPanel의 loadingBoard메서드는 domove함수가 실행될때마다 보드 전체를 업데이트함 => 약간의 버퍼링 발생
+=> 움직이는 칸들만 업데이트하는 로직 구현 필요. // from과 to의 위치를 업데이트하는 것뿐만아니라 앙파상이나 캐슬링이 발생한 경우도 고려해야함
+
+
 사용한 라이브러리</br>
 https://github.com/senyast4745/Stockfish-Java</br>
 https://github.com/bhlangonijr/chesslib </br>
