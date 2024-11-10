@@ -12,7 +12,9 @@ import xyz.niflheim.stockfish.util.Preference;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
-
+// 패널 크기,배경색 및 ,updateLabel 메서드 구현
+//GameFrame에 MoveHistoryPanel 추가할 예정
+//MoveHistory 패널안에 JLabel이 들어가있는 구조
 public class MoveHistoryPanel extends JPanel{
 
     private MoveList moveHistory; // move가 발생하면 로직에 의해서 moveList에 move가 추가됨
