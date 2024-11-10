@@ -1,12 +1,8 @@
 package xyz.niflheim.stockfish.ui.board;
 
 import com.github.bhlangonijr.chesslib.Board;
-import com.github.bhlangonijr.chesslib.Square;
 import com.github.bhlangonijr.chesslib.game.GameMode;
-import com.github.bhlangonijr.chesslib.move.Move;
 import xyz.niflheim.stockfish.engine.StockfishClient;
-import xyz.niflheim.stockfish.engine.enums.Query;
-import xyz.niflheim.stockfish.engine.enums.QueryType;
 import xyz.niflheim.stockfish.exceptions.StockfishInitException;
 import xyz.niflheim.stockfish.util.Elo;
 import xyz.niflheim.stockfish.util.GameDTO;

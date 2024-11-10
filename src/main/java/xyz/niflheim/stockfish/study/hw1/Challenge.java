@@ -23,20 +23,20 @@ public class Challenge extends JLabel {
     List<Move> moveList;
     GameDTO gameDTO;
     Board board;
-
-    
     MoveList moveHistory; // 이동 정보가 담겨있음
-
 
     public Challenge() throws StockfishInitException {
         initGameSetting();
-        setFont(new Font("Arial", Font.BOLD, 32)); // 큰 글씨 설정
+        setFont(new Font("Plain", Font.BOLD, 32)); // 큰 글씨 설정
         setHorizontalAlignment(SwingConstants.CENTER); // 가운데 정렬
     }
 
     public void updateLabel() throws InterruptedException { //doMove메서드가 호출될때마다 moveHistory에 이동이 저장됨
+
         for(Move move : moveList) {
             boolean isMoveValid = board.doMove(move, true);
+            String[] moveHistoryDisplay = moveHistory.toFanArray();
+            setText(String.join(",",moveHistoryDisplay));
 
             Thread.sleep(1000);
             if(!isMoveValid) {
