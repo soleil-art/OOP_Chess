@@ -20,7 +20,7 @@ import java.awt.*;
 public class BoardPanel extends JPanel implements BoardEventListener {
 
     public static final int SQUARE_DIMENSION = 75;
-
+    private final MoveHistoryPanel moveHistoryPanel;
     private final StockfishClient stockfishClient;
     private final Board board;
     private final MoveList moveHistory;
@@ -42,6 +42,7 @@ public class BoardPanel extends JPanel implements BoardEventListener {
     public BoardPanel(GameDTO gameDTO) {
         super(new BorderLayout());
         stockfishClient = gameDTO.getStockfishClient();
+        moveHistoryPanel = new MoveHistoryPanel(gameDTO);
         board = gameDTO.getBoard();
         moveHistory = gameDTO.getMoveHistory();
         isUserTurn = gameDTO.getGameMode() == GameMode.MACHINE_VS_HUMAN;
@@ -218,6 +219,7 @@ public class BoardPanel extends JPanel implements BoardEventListener {
     }
     public void executeMove(Move move) {
         moveHistory.add(move);
+        moveHistoryPanel.updateLabel();
         loadingBoard(board);
         //loadingBoard(board,move.getFrom(),move.getTo());
         System.out.println(board.toString());
@@ -314,6 +316,10 @@ public class BoardPanel extends JPanel implements BoardEventListener {
 
     public Board getBoard() {
         return board;
+    }
+
+    public MoveHistoryPanel getMoveHistoryPanel() {
+        return moveHistoryPanel;
     }
 
     @Override

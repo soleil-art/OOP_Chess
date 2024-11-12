@@ -1,71 +1,103 @@
 package xyz.niflheim.stockfish.ui.board;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.*;
+
 import com.github.bhlangonijr.chesslib.Board;
 import com.github.bhlangonijr.chesslib.Square;
 import com.github.bhlangonijr.chesslib.game.GameMode;
 import com.github.bhlangonijr.chesslib.move.Move;
 import com.github.bhlangonijr.chesslib.move.MoveList;
+
 import xyz.niflheim.stockfish.exceptions.StockfishInitException;
 import xyz.niflheim.stockfish.util.GameDTO;
 import xyz.niflheim.stockfish.util.Preference;
 
-import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
-// 패널 크기,배경색 및 ,updateLabel 메서드 구현
-//GameFrame에 MoveHistoryPanel 추가할 예정
-//MoveHistory 패널안에 JLabel이 들어가있는 구조
-public class MoveHistoryPanel extends JPanel{
+public class MoveHistoryPanel extends JPanel {
 
-    private MoveList moveHistory; // move가 발생하면 로직에 의해서 moveList에 move가 추가됨
+    private MoveList moveHistory;
     private JLabel moveHistoryDisplay;
+    private JScrollPane scrollPane;
 
     public MoveHistoryPanel(GameDTO gameDTO) {
         moveHistory = gameDTO.getMoveHistory();
+
+        // JLabel 초기화
         moveHistoryDisplay = new JLabel();
-        moveHistoryDisplay.setText("Hello World");
-        moveHistoryDisplay.setBounds(100, 50, 522, 515);
-        add(moveHistoryDisplay); // 패널에 jLabel 추가
-        setBounds(100, 50, 522, 515); // 패널 크기와 위치 설정
+        moveHistoryDisplay.setVerticalAlignment(SwingConstants.TOP); // 위쪽 정렬
+        moveHistoryDisplay.setHorizontalAlignment(SwingConstants.LEFT); // 왼쪽 정렬
+        moveHistoryDisplay.setOpaque(true);
+        moveHistoryDisplay.setBackground(Color.MAGENTA); // JLabel 배경색 설정 (확인용)
 
-        
+        // JScrollPane에 JLabel 추가
+        scrollPane = new JScrollPane(moveHistoryDisplay);
+        scrollPane.setPreferredSize(new Dimension(400, 400)); // 패널의 기본 크기 설정
+        scrollPane.setBorder(BorderFactory.createEmptyBorder()); // 테두리 제거
+        scrollPane.getViewport().setBackground(Color.MAGENTA); // JScrollPane 뷰포트 배경 설정
+
+        // MoveHistoryPanel 설정
+        setLayout(new BorderLayout());
+        add(scrollPane, BorderLayout.CENTER);
+        setBackground(Color.MAGENTA); // 패널 배경색 설정 (테스트용)
     }
-    //기물 이동이 발생하면 외부에서 이함수를 호출할 예정 => 메서드가 호출될때마다 JLabel을 갱신시켜야함.
+
+    // 기물 이동이 발생하면 외부에서 이 함수를 호출하여 JLabel을 갱신합니다.
     public void updateLabel() {
+        String[] fanArray = moveHistory.toFanArray();
+        int i = 0;
 
+        // moveHistory에서 모든 기물 이동을 문자열로 가져오기
+        StringBuilder movesText = new StringBuilder("<html>");
+        for (String fan : fanArray) {
+            movesText.append((i + 1)).append(". ").append(fan.charAt(0)).append(moveHistory.get(i)).append("<br>");
+            i++;
+        }
+        movesText.append("</html>");
+
+        // JLabel의 텍스트 갱신
+        moveHistoryDisplay.setText(movesText.toString());
+
+        // 스크롤을 자동으로 가장 아래로 이동
+        SwingUtilities.invokeLater(() -> {
+            JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+            verticalScrollBar.setValue(verticalScrollBar.getMaximum());
+        });
     }
-    //테스트 코드
+
+    // 테스트 코드
     public static void main(String[] args) throws StockfishInitException, InterruptedException {
-        //기본 세팅
+        // 기본 세팅
         Preference preference = new Preference("UserName");
         preference.setGameMode(GameMode.HUMAN_VS_HUMAN);
         GameDTO gameDTO = new GameDTO(preference);
         BoardPanel boardPanel = new BoardPanel(gameDTO);
         Board board = boardPanel.getBoard();
-        List<Move> moveList = new ArrayList<>(List.of(new Move(Square.D2,Square.D4),new Move(Square.G8,Square.F6),new Move(Square.C2,Square.C4),
-                new Move(Square.E7,Square.E6),new Move(Square.G1,Square.G3)));
+        List<Move> moveList = new ArrayList<>(List.of(
+                new Move(Square.D2, Square.D4), new Move(Square.G8, Square.F6),
+                new Move(Square.C2, Square.C4), new Move(Square.E7, Square.E6),
+                new Move(Square.G1, Square.G3)
+        ));
 
         // 테스트를 위한 임시 프레임 생성
-        JFrame frame = new JFrame("test Frame");
+        JFrame frame = new JFrame("Test Frame");
         MoveHistoryPanel moveHistoryPanel = new MoveHistoryPanel(gameDTO); // moveHistory패널 생성
         frame.add(moveHistoryPanel);
-        frame.setSize(800, 800);
+        frame.pack(); // 프레임 크기를 패널에 맞게 자동 조정
         frame.setLocationRelativeTo(null); // 창을 화면 중앙에 배치
-        frame.pack();
-
-        // 프레임을 표시
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
-        for(Move move : moveList) {
+        // 기물 이동 테스트
+        for (Move move : moveList) {
             Thread.sleep(1000);
             boolean isMoveValid = board.doMove(move, true);
             moveHistoryPanel.updateLabel();
-            if(!isMoveValid) {
+            if (!isMoveValid) {
                 throw new RuntimeException("기물 이동 오류");
             }
-            System.out.println("------------------------------------");
         }
-
-
     }
 }

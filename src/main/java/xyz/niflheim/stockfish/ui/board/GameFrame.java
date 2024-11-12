@@ -15,7 +15,6 @@ public class GameFrame extends JFrame {
     private JLayeredPane layeredPane;
     private BoardPanel boardPanel;
     private MoveHistoryPanel moveHistoryPanel;
-
     private final GameDTO gameDTO;
     private final StockfishClient stockfishClient;
     private final Board board;
@@ -24,6 +23,7 @@ public class GameFrame extends JFrame {
         this.gameDTO = gameDTO;
         boardPanel = new BoardPanel(gameDTO);
         stockfishClient = gameDTO.getStockfishClient();
+        moveHistoryPanel = boardPanel.getMoveHistoryPanel();
         board = boardPanel.getBoard();
         setBackground(Color.decode("#302E2B"));
         initFrame();
@@ -40,7 +40,11 @@ public class GameFrame extends JFrame {
         layeredPane = new JLayeredPane();
         layeredPane.add(boardPanel,JLayeredPane.DEFAULT_LAYER);
         setContentPane(layeredPane);
+
+        moveHistoryPanel.setBounds(8*BoardPanel.SQUARE_DIMENSION,0,4*BoardPanel.SQUARE_DIMENSION,4*BoardPanel.SQUARE_DIMENSION);
+        layeredPane.add(moveHistoryPanel,JLayeredPane.DEFAULT_LAYER);
     }
+
 
     public static void main(String[] args) throws StockfishInitException {
         Preference preference = new Preference("UserName");
