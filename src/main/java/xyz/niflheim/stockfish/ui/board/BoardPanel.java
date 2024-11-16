@@ -27,6 +27,7 @@ public class BoardPanel extends JPanel implements BoardEventListener {
     private boolean boardReversed;
     private boolean isUserTurn; // 사용자 턴인지 확인하는 변수
     private boolean isPVP;
+    private boolean isReplayMode;
     private Square lastMove;
     private JPanel boardPanel;
     private JPanel[][] squarePanels;
@@ -48,6 +49,7 @@ public class BoardPanel extends JPanel implements BoardEventListener {
         isUserTurn = gameDTO.getGameMode() == GameMode.MACHINE_VS_HUMAN;
         isPVP = gameDTO.getGameMode() == GameMode.MACHINE_VS_HUMAN || gameDTO.getGameMode() == GameMode.HUMAN_VS_MACHINE;
         lastMove =Square.NONE;
+        isReplayMode = gameDTO.isReplayMode();
         //board 리스너 추가
         board.addEventListener(BoardEventType.ON_MOVE,this);
         board.addEventListener(BoardEventType.ON_LOAD,this);
@@ -222,6 +224,12 @@ public class BoardPanel extends JPanel implements BoardEventListener {
         moveHistoryPanel.updateLabel();
         loadingBoard(board);
         //loadingBoard(board,move.getFrom(),move.getTo());
+        System.out.println(board.toString());
+        System.out.println(board.getFen());
+    }
+    public void replayMove(Move move) {
+        moveHistoryPanel.updateLabel();
+        loadingBoard(board);
         System.out.println(board.toString());
         System.out.println(board.getFen());
     }

@@ -1,9 +1,28 @@
 package xyz.niflheim.stockfish.ui.launch;
 
+import com.github.bhlangonijr.chesslib.Square;
+import com.github.bhlangonijr.chesslib.game.Game;
+import com.github.bhlangonijr.chesslib.game.GameMode;
+import com.github.bhlangonijr.chesslib.game.Player;
+import com.github.bhlangonijr.chesslib.move.Move;
+import com.github.bhlangonijr.chesslib.move.MoveList;
+import com.github.bhlangonijr.chesslib.pgn.GameLoader;
+import com.github.bhlangonijr.chesslib.pgn.PgnIterator;
+import xyz.niflheim.stockfish.exceptions.StockfishInitException;
+import xyz.niflheim.stockfish.ui.board.BoardPanel;
+import xyz.niflheim.stockfish.ui.board.GameFrame;
+import xyz.niflheim.stockfish.util.GameDTO;
+import xyz.niflheim.stockfish.util.Preference;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class LaunchFrame extends JFrame {
 
@@ -54,7 +73,7 @@ public class LaunchFrame extends JFrame {
 
         // 버튼 생성 및 스타일 적용
         JButton loginButton = new JButton("Log In");
-        JButton signUpButton = new JButton("Sign Up");
+        JButton signUpButton = new JButton("Replays");
 
         customizeButton(loginButton);
         customizeButton(signUpButton);
@@ -76,12 +95,52 @@ public class LaunchFrame extends JFrame {
 
         // 버튼 리스너
         loginButton.addActionListener(e -> showLoginPanel());
+        signUpButton.addActionListener(e->replayMoveHistory());
 
         // 버튼 추가
         backgroundPanel.add(loginButton);
         backgroundPanel.add(signUpButton);
 
         setVisible(true); // 프레임을 가시화
+    }
+
+    private void replayMoveHistory()  {
+        GameDTO gameDTO = null;
+        try {
+            PgnIterator games = new PgnIterator("Anatoly Karpov_vs_Zoltan Ribli_____.__.__.pgn");
+            Iterator<Game> iterator = games.iterator();
+            Game next = iterator.next();
+            Player whitePlayer = next.getWhitePlayer();
+            Player blackPlayer = next.getBlackPlayer();
+            MoveList halfMoves = next.getHalfMoves();
+            Iterator<Move> movelist = halfMoves.iterator();
+            Preference preference = new Preference(GameMode.HUMAN_VS_HUMAN, whitePlayer.getName());
+            preference.setOpponent(blackPlayer.getName());
+            gameDTO = new GameDTO(preference);
+            gameDTO.setReplayMode(true);
+            GameFrame gameFrame = new GameFrame(gameDTO);
+            gameFrame.setVisible(true);
+            BoardPanel boardPanel = gameFrame.getBoardPanel();
+            Timer timer = new Timer(1000, new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (movelist.hasNext()) {
+                        boardPanel.processUserMove(movelist.next());
+                    } else {
+                        ((Timer) e.getSource()).stop();
+                        JOptionPane.showMessageDialog(gameFrame, "Winner is " +whitePlayer.getName()+"!");
+                    }
+                }
+            });
+
+            timer.start();
+        } catch (StockfishInitException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     private void showLoginPanel() {

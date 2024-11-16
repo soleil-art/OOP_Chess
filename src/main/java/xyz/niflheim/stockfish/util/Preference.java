@@ -7,6 +7,7 @@ public class Preference {
     private GameMode gameMode; // ex) machine vs human 기계(흑) 사람(백) // human vs machine 사람(흑) 기계(백)
     private Elo elo;
     private String userName;
+    private String opponent;
 
     public Preference(String userName) {
         this.userName = userName;
@@ -35,5 +36,13 @@ public class Preference {
 
     public void setGameMode(GameMode gameMode) {
         this.gameMode = gameMode;
+    }
+
+    public void setOpponent(String opponent) {
+        this.opponent = opponent;
+    }
+
+    public String getOpponent() {
+        return opponent;
     }
 }

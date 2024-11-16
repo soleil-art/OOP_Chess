@@ -17,6 +17,7 @@ public class GameDTO {
     private boolean boardReserved;
     private String blackPlayer;
     private String whitePlayer;
+    private boolean IsReplayMode = false;
 
     public GameDTO(Preference preference) throws StockfishInitException {
         gameMode = preference.getGameMode();
@@ -42,10 +43,9 @@ public class GameDTO {
             blackPlayer = "StockFishEngin";
             whitePlayer = preference.getUserName(); // 사용자 아이디
         }else {
-            blackPlayer = preference.getUserName()+"(1)";
+            blackPlayer = preference.getOpponent();
             whitePlayer = preference.getUserName();
         }
-
     }
 
     public Board getBoard() {
@@ -74,5 +74,13 @@ public class GameDTO {
 
     public MoveList getMoveHistory() {
         return moveHistory;
+    }
+
+    public boolean isReplayMode() {
+        return IsReplayMode;
+    }
+
+    public void setReplayMode(boolean replayMode) {
+        IsReplayMode = replayMode;
     }
 }

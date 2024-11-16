@@ -2,7 +2,7 @@ package xyz.niflheim.stockfish.ui.launch;
 
 import org.apache.log4j.Logger;
 import xyz.niflheim.stockfish.repository.UserRepository;
-import xyz.niflheim.stockfish.ui.preference.PreferenceFrame;
+import xyz.niflheim.stockfish.ui.preference.ChessModeSelectionPanel;
 import xyz.niflheim.stockfish.util.Preference;
 
 import javax.swing.*;
@@ -173,10 +173,15 @@ public class LoginPanel extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 //게임 선호 설정
                 Preference preference = new Preference(usernameField.getText());
-                PreferenceFrame preferenceFrame = new PreferenceFrame(preference);
-                preferenceFrame.setVisible(true);
-
-                SwingUtilities.getWindowAncestor(LoginPanel.this).dispose(); // 현재 프레임(로그인 프레임)을 가져와서 닫기
+                ChessModeSelectionPanel chessModeSelectionPanel = new ChessModeSelectionPanel(preference);
+                JFrame frame = new JFrame("Chess Game Mode Selection");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setSize(800, 600);
+                frame.add(chessModeSelectionPanel);
+                frame.setResizable(false); // 창 크기 변경 불가
+                frame.setVisible(true);
+                frame.setLocationRelativeTo(null);
+                SwingUtilities.getWindowAncestor(loginPanelButton).dispose();
             }
         });
         backgroundLabel.add(loginPanelButton);

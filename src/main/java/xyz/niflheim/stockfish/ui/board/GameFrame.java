@@ -46,6 +46,7 @@ public class GameFrame extends JFrame {
     }
 
 
+
     public static void main(String[] args) throws StockfishInitException {
         Preference preference = new Preference("UserName");
         preference.setElo(Elo.BEGINNER);
@@ -53,5 +54,9 @@ public class GameFrame extends JFrame {
         GameDTO gameDTO1 = new GameDTO(preference);
         GameFrame gameFrame = new GameFrame(gameDTO1);
         gameFrame.setVisible(true);
+    }
+
+    public BoardPanel getBoardPanel() {
+        return boardPanel;
     }
 }
