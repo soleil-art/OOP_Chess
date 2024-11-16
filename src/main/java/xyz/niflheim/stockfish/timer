@@ -1,4 +1,4 @@
-package countTimer;
+package xyz.niflheim.stockfish;
 
 import javax.swing.*;
 import java.awt.*;
