@@ -19,7 +19,7 @@ public class GameFrame extends JFrame {
     private MoveHistoryPanel moveHistoryPanel;
     private NamePanel whiteNamePanel;
     private NamePanel blackNamePanel;
-    private Button reverseBoardButton;
+    private JButton reverseBoardButton;
     private final GameDTO gameDTO;
     private final StockfishClient stockfishClient;
     private final Board board;
@@ -57,7 +57,8 @@ public class GameFrame extends JFrame {
         whiteNamePanel.setBounds(0,8*BoardPanel.SQUARE_DIMENSION+60,220,60);
         layeredPane.add(whiteNamePanel,JLayeredPane.DEFAULT_LAYER);
 
-        reverseBoardButton = new Button("reverse");
+        ImageIcon icon = new ImageIcon(getClass().getResource("/image/boardReserve.png"));
+        reverseBoardButton = new JButton(icon);
         reverseBoardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
