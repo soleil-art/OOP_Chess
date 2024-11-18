@@ -58,7 +58,8 @@ public class GameFrame extends JFrame {
         layeredPane.add(whiteNamePanel,JLayeredPane.DEFAULT_LAYER);
 
         ImageIcon icon = new ImageIcon(getClass().getResource("/image/boardReserve.png"));
-        reverseBoardButton = new JButton(icon);
+        Image scaledImage = icon.getImage().getScaledInstance(50,50,Image.SCALE_SMOOTH);
+        reverseBoardButton = new JButton(new ImageIcon(scaledImage));
         reverseBoardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -70,8 +71,6 @@ public class GameFrame extends JFrame {
         reverseBoardButton.setBounds(8*BoardPanel.SQUARE_DIMENSION,8*BoardPanel.SQUARE_DIMENSION,50,50);
         layeredPane.add(reverseBoardButton);
     }
-
-
 
     public static void main(String[] args) throws StockfishInitException {
         Preference preference = new Preference("UserName");
