@@ -24,7 +24,7 @@ public class BoardPanel extends JPanel implements BoardEventListener {
     private final StockfishClient stockfishClient;
     private final Board board;
     private final MoveList moveHistory;
-    private boolean boardReversed;
+    public boolean boardReversed;
     private boolean isUserTurn; // 사용자 턴인지 확인하는 변수
     private boolean isPVP;
     private boolean isReplayMode;
@@ -128,6 +128,14 @@ public class BoardPanel extends JPanel implements BoardEventListener {
                 }
             }
         }
+    }
+    public void reverseBoard() {
+        boardReversed = !boardReversed;
+        boardPanel.removeAll(); // 기존 보드 패널의 모든 컴포넌트 제거
+        initializeSquares();
+        initializePieces();
+        boardPanel.revalidate(); // 패널 갱신
+        boardPanel.repaint(); // 패널 다시 그리기
     }
     private void initializeSingleSquaresPanel(int row,int col) {
         JLayeredPane squareLayeredPane = new JLayeredPane();
