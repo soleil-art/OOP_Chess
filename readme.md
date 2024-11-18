@@ -1,5 +1,5 @@
 
-<img src="https://github.com/user-attachments/assets/99273a87-ccdb-4a02-8ef2-53b7f0e2a221" width="468" height="489"/>
+<img src="https://github.com/user-attachments/assets/782afee0-051c-42dd-a2b2-7b03de783be9" width="812" height="648"/>
 
 <개선사항></br>
 1.현재 boardPanel의 loadingBoard메서드는 domove함수가 실행될때마다 보드 전체를 업데이트함 => 약간의 버퍼링 발생</br>
